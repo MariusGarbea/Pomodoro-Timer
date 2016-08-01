@@ -23,6 +23,11 @@ $(document).ready(function() {
   }
 
   function timer() {
+    if(breakTime == true) {
+      minutes = 5;
+      seconds = 0;
+      breakTime = false;
+    }
     t = setTimeout(countDown, 1000);
     if (minutes == 0 && seconds == -1 && breakTime == false) {
       $('#timer').html('Break!');
@@ -49,24 +54,27 @@ $(document).ready(function() {
 
   $('#reset').click(function() {
     reset();
+    start = false;
+    breakTime = false;
   });
   
   $("#break").click(function(){
-    minutes = 5;
-    seconds = 0;
     breakTime = true;
-    timer();
-    start = true;
+    if(start == false) {
+      timer();
+      start = true;
+    }
   });
-
+  
   function reset() {
     start = false;
+    breakTime = false;
     $('#timer').html(defaultMin + ':' + defaultSec + '0');
     minutes = defaultMin;
     seconds = defaultSec;
     clearTimeout(t);
   }
-
+  
   function displayTime() {
     time = defaultMin + ':' + defaultSec + '0';
     $('#timer').html(time);
